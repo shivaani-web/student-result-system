@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Result System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f0f2f5;
+            text-align: center;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            width: 320px;
+            margin: auto;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .calc { background: blue; color: white; }
+        .reset { background: gray; color: white; }
+        .show { background: purple; color: white; }
+
+        #allResults {
+            margin-top: 20px;
+            text-align: left;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Student Result System</h2>
+
+    <input type="text" id="name" placeholder="Enter Name"><br>
+    <input type="number" id="m1" placeholder="Mark 1"><br>
+    <input type="number" id="m2" placeholder="Mark 2"><br>
+    <input type="number" id="m3" placeholder="Mark 3"><br>
+    <input type="number" id="m4" placeholder="Mark 4"><br>
+
+    <button class="calc" onclick="addStudent()">Add Student</button>
+    <button class="reset" onclick="resetFields()">Reset</button>
+    <button class="show" onclick="showAll()">Show All</button>
+
+    <h3 id="result"></h3>
+</div>
+
+<div id="allResults"></div>
+
+<script>
+    let students = [];
+
+    function addStudent() {
+        let name = document.getElementById("name").value;
+        let m1 = Number(document.getElementById("m1").value);
+        let m2 = Number(document.getElementById("m2").value);
+        let m3 = Number(document.getElementById("m3").value);
+        let m4 = Number(document.getElementById("m4").value);
+
+        let total = m1 + m2 + m3 + m4;
+        let avg = total / 4;
+
+        let grade = "";
+        if (avg >= 90) grade = "A+";
+        else if (avg >= 75) grade = "A";
+        else if (avg >= 60) grade = "B";
+        else if (avg >= 50) grade = "C";
+        else grade = "Fail";
+
+        let status = (avg >= 50) ? "PASS" : "FAIL";
+
+        let student = {
+            name: name,
+            total: total,
+            avg: avg,
+            grade: grade,
+            status: status
+        };
+
+        students.push(student);
+
+        document.getElementById("result").innerHTML =
+            "Added: " + name + " (" + status + ")";
+    }
+
+    function showAll() {
+        let output = "<h3>All Students</h3>";
+
+        students.forEach((s, index) => {
+            output +=
+                "<b>" + (index+1) + ". " + s.name + "</b><br>" +
+                "Total: " + s.total + "<br>" +
+                "Average: " + s.avg + "<br>" +
+                "Grade: " + s.grade + "<br>" +
+                "Status: " + s.status + "<br><br>";
+        });
+
+        document.getElementById("allResults").innerHTML = output;
+    }
+
+    function resetFields() {
+        document.getElementById("name").value = "";
+        document.getElementById("m1").value = "";
+        document.getElementById("m2").value = "";
+        document.getElementById("m3").value = "";
+        document.getElementById("m4").value = "";
+    }
+</script>
+
+</body>
+</html>
